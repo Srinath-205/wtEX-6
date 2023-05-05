@@ -1,0 +1,50 @@
+<html>
+<head>
+	<title>post and get handling</title>
+	<script>
+		function handleLogin() {
+			// Get the value of the email and password fields
+			var email = document.getElementById("email").value;
+			var password = document.getElementById("password").value;
+
+			// Perform a GET request to check if the credentials are correct
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					// If the GET request is successful, show a message
+					alert(xhr.responseText);
+				}
+			};
+			xhr.open("GET", "check_login.php?email=" + email + "&password=" + password, true);
+			xhr.send();
+
+			// Perform a POST request to actually log in the user
+			var form = document.createElement("form");
+			form.method = "POST";
+			form.action = "login.php";
+			var emailField = document.createElement("input");
+			emailField.type = "hidden";
+			emailField.name = "email";
+			emailField.value = email;
+			var passwordField = document.createElement("input");
+			passwordField.type = "hidden";
+			passwordField.name = "password";
+			passwordField.value = password;
+			form.appendChild(emailField);
+			form.appendChild(passwordField);
+			document.body.appendChild(form);
+			form.submit();
+		}
+	</script>
+</head>
+<body>
+	<h1>Login</h1>
+	<form>
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br><br>
+		<label for="password">Password:</label>
+		<input type="password" id="password" name="password"><br><br>
+		<input type="button" value="Login" onclick="handleLogin()">
+	</form>
+</body>
+</html>
